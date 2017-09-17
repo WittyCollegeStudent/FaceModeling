@@ -1,32 +1,30 @@
-<!--
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
--->
+<!DOCTYPE html>
 <html lang="en" class="no-js" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:jsp="http://java.sun.com/JSP/Page">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../favicon.ico">
+    <link rel="icon" href="../../images/favicon.ico">
 
-    <title>Narrow Jumbotron Template for Bootstrap</title>
+    <title>人脸重建</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+    <link href="../../lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="../css/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../../css/jumbotron-narrow.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
-    <script src="../lib/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../lib/assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="../../lib/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../lib/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -36,27 +34,43 @@
 </head>
 
 <body>
-<div class="container">
-
-    <div th:replace="nav::nav"></div>
-
-    <div class="jumbotron">
-        <h1>请上传图片</h1>
-    </div>
-    <div align="center">
-        <div style="float: right">
-            <a class="btn btn-lg btn-info" href="/history" role="button">点击上传</a>
-            <span>&nbsp;&nbsp;</span>
-            <a class="btn btn-lg btn-success" href="#" role="button" disabled="true">点击下载</a>
+<form id="form" enctype="multipart/form-data" method="post">
+    <input id="select_image" name="select_image" type="file" class="btn btn-lg btn-info" role="button" style="display: none"/>
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">主页</a></li>
+                    <li role="presentation"><a href="#">关于</a></li>
+                    <li role="presentation"><a href="#">历史</a></li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">人脸重建</h3>
         </div>
-        <%--<span>&nbsp;&nbsp;</span>--%>
-        <%--<div style="float: right">--%>
-        <%--</div>--%>
-    </div>
-</div> <!-- /container -->
-
+        <div class="jumbotron">
+            <h1 id="msg" style="visibility: visible">请上传图片</h1>
+            <img id="img" name="img" src="">
+            <h3 id="img_name"></h3>
+        </div>
+        <div align="center">
+            <div style="float: right">
+                <a id="select_btn" class="btn btn-lg btn-info" role="button">选择图片</a>
+                <span>&nbsp;</span>
+                <a id="upload_btn" class="btn btn-lg btn-info" href="#" role="button">点击上传</a>
+                <span>&nbsp;</span>
+                <a id="download_btn" class="btn btn-lg btn-success" href="#" role="button" style="visibility: visible">点击下载</a>
+            </div>
+            <span>&nbsp;&nbsp;</span>
+            <div style="float: right">
+            </div>
+        </div>
+    </div> <!-- /container -->
+</form>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../lib/jquery.min.js"></script>
+<script src="../../lib/bootstrap-filestyle/bootstrap-filestyle.js"></script>
+<script src="../../js/index.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
