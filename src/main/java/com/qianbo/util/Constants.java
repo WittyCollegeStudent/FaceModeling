@@ -9,4 +9,6 @@ public class Constants {
     public static final String IMAGE_SAVE_PATH = "C:\\Users\\WeiAnYang\\IdeaProjects\\FaceModeling\\src\\main\\webapp\\images\\upload";
     //前端读取图片的路径(存放照片的点图)
     public static final String PREVIEW_PATH = "..\\..\\images\\preview";
+    //处理后文件的下载路径
+    public static final String IMAGE_DOWNLOAD_PATH = "C:\\Users\\WeiAnYang\\IdeaProjects\\FaceModeling\\src\\main\\webapp\\images\\download";
 }

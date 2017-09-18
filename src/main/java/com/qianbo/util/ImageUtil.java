@@ -4,7 +4,17 @@ public class ImageUtil {
 
     private String img_src;
     private String img_name;
-    private Boolean handle_success;
+    private Boolean handle_success;//是否处理完成
+    private Integer visit_time = 0;//访问次数
+    public static final Integer MAX_VISIT = 3;
+
+    public Integer getVisit_time() {
+        return visit_time;
+    }
+
+    public void setVisit_time(Integer visit_time) {
+        this.visit_time = visit_time;
+    }
 
     public String getImg_src() {
         return img_src;
