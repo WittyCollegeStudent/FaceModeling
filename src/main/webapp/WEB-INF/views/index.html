@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" xmlns:jsp="http://java.sun.com/JSP/Page">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +35,10 @@
 
 <body>
 <form id="form" enctype="multipart/form-data" method="post">
-    <input id="select_image" name="select_image" type="file" class="btn btn-lg btn-info" role="button" style="display: none"/>
+    <input id="select_image" name="file" type="file" class="btn btn-lg btn-info" role="button" style="display: none"/>
+    <input id="msg_received" name="msg" th:value="${msg}" style="display: none"/>
+    <input id="img_src_received" name="img_name" th:value="${img_src}" style="display: none"/>
+    <input id="handling" name="handling"/>
     <div class="container">
         <div class="header clearfix">
             <nav>
@@ -48,9 +51,9 @@
             <h3 class="text-muted">人脸重建</h3>
         </div>
         <div class="jumbotron">
-            <h1 id="msg" style="visibility: visible">请上传图片</h1>
+            <h1 id="msg" style="visibility: visible" th:text="请上传图片"></h1>
             <img id="img" name="img" src="">
-            <h3 id="img_name"></h3>
+            <h3 id="img_name" ></h3>
         </div>
         <div align="center">
             <div style="float: right">
@@ -71,6 +74,6 @@
 <script src="../../lib/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="../../lib/jquery.min.js"></script>
 <script src="../../lib/bootstrap-filestyle/bootstrap-filestyle.js"></script>
-<script src="../../js/index.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../../js/index.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 /*
 *页面初始化点击"上传"
 * */
+
+//获得图片的读取路径
+var imagePath = $("#img_read_path").val();
 window.onload = function () {
     var pathname = window.location.pathname;
     //设置action
@@ -9,8 +12,12 @@ window.onload = function () {
     else
         $("#form").attr("action",pathname);
     //如果有结果返回,则设置图片src
-    var src = $("#img_src").val();
+    var src = $("#img_src_received").val();
     $("#img").attr("src",src);
+    //如果有消息返回，则设置   返回消息
+    var msg = $("#msg_received").val();
+    if(msg != null && msg != "")
+        $("#msg").text(msg);
 };
 
 $("#upload_btn").on("click",function () {
@@ -18,13 +25,16 @@ $("#upload_btn").on("click",function () {
     $("#form").submit();
 });
 
+function get() {
+    
+}
+
 //选择图片文件后替换原有图片
 $("#select_image").change(function () {
     var fileUrl = getFileUrl("select_image");
     var fileName = document.getElementById("select_image").files.item(0).name;
     var $msg = $("#msg");
     var msg_display = $msg[0].style.display;
-    // alert(fileUrl)
     $("#img").attr("src",fileUrl);
     //保存图片url
     $("#img_src").val(fileUrl);
