@@ -18,7 +18,7 @@ window.onload = function () {
     var msg = $("#msg_received").val();
     if (msg != null && msg != "")
         $("#msg").text(msg);
-    //如果处理成功，则下载按钮可见
+    //如果处理成功，则下载按钮可见，并显示fbx
     if($("#handled").val() == "true"){
         $("#download_btn").show();
     }
@@ -38,10 +38,11 @@ function setImgNameReceived() {
 function resetImageState() {
     var $img = $("#img");
     var src = $img.attr("src");
-    if(src == null || src == "")
-        $img.hide();
-    else
-        $img.show();
+    // if(src == null || src == "")
+    //     $img.hide();
+    // else
+    //     $img.show();
+    $img.hide();
 }
 
 //点击"下载"按钮
@@ -110,3 +111,5 @@ function getFileUrl(sourceId) {
     }
     return url;
 }
+
+
