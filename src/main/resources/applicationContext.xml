@@ -1,12 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-                           http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-                           http://www.springframework.org/schema/aop
-                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-                           http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       default-autowire="byName">
+
+    <!-- 加载资源文件  其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载-->
+    <context:property-placeholder
+            file-encoding="UTF-8" location="classpath:jdbc.properties"
+            ignore-unresolvable="true"/>
+
+    <!--打开Spring的annotation -->
+    <context:annotation-config />
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="facemodeling"/>
+        <property name="packagesToScan">
+            <list>
+                <value>com.qianbo.model</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                <!--以下是mysql的配置-->
+                hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+                <!--hibernate.dialect=org.hibernate.dialect.ProgressDialect-->
+                hibernate.current_session_context_class=org.springframework.orm.hibernate5.SpringSessionContext
+                hibernate.show_sql=true
+                <!--hibernate.hbm2ddl.auto=update-->
+                hibernate.format_sql=false
+                <!--hibernate.search.default.directory_provider=filesystem hibernate.search.default.indexBase=${db.indexpath} -->
+            </value>
+        </property>
+    </bean>
+
+    <!-- 配置Spring事务处理 -->
+    <tx:annotation-driven transaction-manager="facemodelingtxManager"
+                          proxy-target-class="true"/>
+    <!-- 1,创建事务管理器 -->
+    <bean id="facemodelingtxManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="facemodeling" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName:com.mysql.jdbc.Driver}"/>
+        <property name="url" value="${jdbc.url:jdbc:mysql://127.0.0.1:3306/fmdb}"/>
+        <property name="username" value="${jdbc.username:fmdb}"/>
+        <property name="password" value="${jdbc.password:mysql}"/>
+        <property name="initialSize" value="${jdbc.initialSize:5}"/>        <!-- 初始连接数量 -->
+        <property name="maxTotal" value="${jdbc.maxTotal:15}"/>         <!-- 最大连接数量 -->
+        <property name="maxIdle" value="${jdbc.maxIdle:5}"/>            <!-- 空闲连接数量 -->
+        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis:600000}"/>       <!-- 一个查询10分钟内没有返回，自动放弃 -->
+        <property name="validationQuery" value="${jdbc.validationQuery:SELECT 1}"/>   <!-- 数据库连接可用性测试语句 -->
+        <property name="testOnBorrow"
+                  value="${jdbc.testOnBorrow:true}"/>          <!-- 每次获取一个连接的时候，验证一下连接是否可用，语句在validationQuery里面 -->
+        <property name="removeAbandonedOnBorrow" value="${jdbc.removeAbandonedOnBorrow:true}"/>       <!-- 自动处理连接未关闭的问题，Setting this to true can recover db connections from poorly
+    written applications which fail to close a connection. -->
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout:300}"/> <!-- 连接使用后5分钟未关闭，则抛弃 -->
+
+        <!-- 每5分钟检查一次，每次检查3个连接，如果连接空闲时间达到5分钟，则认为可以Evict，从连接池排除 空闲的连接是否排除对连接池似乎没有太大影响，我们只需要保证每次获取的连接都可用，所以暂时先不开启
+        <property name="timeBetweenEvictionRunsMillis" value="300000" /> <property
+        name="numTestsPerEvictionRun" value="3" /> <property name="minEvictableIdleTimeMillis"
+        value="320000" /> -->
+    </bean>
+    <!-- 使用泛型dao作为抽象基类 -->
+    <bean id="baseDao" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport"
+          abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- 配置对应的实体类的DAO -->
+    <bean id="demo1Dao" parent="baseDao">
+        <constructor-arg value="com.qianbo.model.Demo1"/>
+    </bean>
 </beans>
