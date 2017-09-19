@@ -72,7 +72,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <!-- 配置对应的实体类的DAO -->
-    <bean id="demo1Dao" parent="baseDao">
-        <constructor-arg value="com.qianbo.model.Demo1"/>
-    </bean>
+    <!--<bean id="demo1Dao" parent="baseDao">-->
+        <!--<constructor-arg value="com.qianbo.model.Demo1"/>-->
+    <!--</bean>-->
 </beans>

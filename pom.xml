@@ -17,11 +17,11 @@
         <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
 
         <!-- Dao 层相关包 -->
-        <dependency>
-            <groupId>nz.net.osnz.common</groupId>
-            <artifactId>common-dao</artifactId>
-            <version>4.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>nz.net.osnz.common</groupId>-->
+            <!--<artifactId>common-dao</artifactId>-->
+            <!--<version>4.2</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
