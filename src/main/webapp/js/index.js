@@ -38,11 +38,11 @@ function setImgNameReceived() {
 function resetImageState() {
     var $img = $("#img");
     var src = $img.attr("src");
-    // if(src == null || src == "")
-    //     $img.hide();
-    // else
-    //     $img.show();
-    $img.hide();
+    if(src == null || src == "" || $("#handled").val() == "true")
+        $img.hide();
+    else
+        $img.show();
+    // $img.hide();
 }
 
 //点击"下载"按钮

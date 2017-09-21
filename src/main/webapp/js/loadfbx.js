@@ -8,7 +8,7 @@ var clock = new THREE.Clock();
 
 var mixers = [];
 
-if ($("#handled").val() == 'true')
+// if ($("#handled").val() == 'true')
     init();
 
 function init() {
