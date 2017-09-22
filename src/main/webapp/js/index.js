@@ -7,7 +7,7 @@ var handled = $("#handled").val();
 if(handled == "false"){
     var t1 = window.setInterval(getHandleState,1000);
 }
-// alert($("#handled").val())
+
 window.onload = function () {
     //如果有结果返回,则设置图片src
     var src = $("#img_src_received").val();
@@ -26,6 +26,8 @@ window.onload = function () {
         $("#download_btn").hide();
     //显示图片
     resetImageState();
+    //显示模型
+    resetModelState();
 };
 
 //通过返回的名称设置图片名
@@ -33,6 +35,14 @@ function setImgNameReceived() {
     var img_name_received = $("#img_name_received").val();
     if(img_name_received != null && img_name_received != "")
         $("#img_name").text(img_name_received);
+}
+
+//设置模型状态
+function resetModelState(){
+    var src = $("#img").attr("src");
+    if(src != null && src != "") {
+        $("canvas").hide();
+    }
 }
 
 function resetImageState() {
@@ -45,10 +55,7 @@ function resetImageState() {
     // $img.hide();
 }
 
-//点击"下载"按钮
-// $("#download_btn").on("click",function () {
-//    if($("#"))
-// });
+//点击"上传"
 
 $("#upload_btn").on("click", function () {
     var select_image = $("#select_image").val();
@@ -73,13 +80,18 @@ function getHandleState() {
                 window.clearInterval(t1);
                 window.location.href = "/index/handleSuccess";
                 return ;
+            }else if(data == "failed"){
+                window.clearInterval(t1);
+                $("#msg").text("上传失败，请重新上传");
+                return ;
             }
         }
     });
 }
 
-//选择图片文件后替换原有图片
+//选择图片文件
 $("#select_image").change(function () {
+
     var fileUrl = getFileUrl("select_image");
     var fileName = document.getElementById("select_image").files.item(0).name;
     var $msg = $("#msg");
@@ -92,9 +104,20 @@ $("#select_image").change(function () {
     //显示图片名称
     $("#img_name").text(fileName);
     resetImageState();
+    resetModelState();
 });
+
 //点击选择图片按钮，弹出图片选择框
 $("#select_btn").on('click', function () {
+    // //初始化后台照片util
+    // $.ajax({
+    //     type:"POST",
+    //     url:"/index/init",
+    //     success:function (data) {
+    //
+    //     }
+    // });
+    // $()
     var $select = $("#select_image");
     $select.click();
     $("#handled").val("");

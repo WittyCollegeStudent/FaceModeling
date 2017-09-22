@@ -15,57 +15,63 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
     <!-- Custom styles for this template -->
-    <link href="../../css/jumbotron-narrow.css" rel="stylesheet">
+    <!--<link href="../../css/jumbotron-narrow.css" rel="stylesheet">-->
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="../../lib/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../lib/assets/js/ie-emulation-modes-warning.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
     <![endif]-->
 </head>
 <body>
-<form id="form" action="/index/upload" enctype="multipart/form-data" method="post">
-    <input id="select_image" name="file" type="file" class="btn btn-lg btn-info" role="button" style="display: none" accept=".jpg"/>
-    <input id="msg_received" name="msg" th:value="${msg}" style="display: none"/>
-    <input id="img_src_received" name="img_src" th:value="${img_src}" style="display: none"/>
-    <input id="handled" name="handled" th:value="${handled}" style="display: none"/>
-    <input id="img_name_received" name="img_name_received" th:value="${img_name}" style="display: none"/>
-    <div class="container">
-        <div class="header clearfix">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">主页</a></li>
-                    <li role="presentation"><a href="#">关于</a></li>
-                    <li role="presentation"><a href="#">历史</a></li>
-                </ul>
-            </nav>
-            <h3 class="text-muted">人脸重建</h3>
-        </div>
-        <div class="jumbotron" id="fbx_div">
-            <h1 id="msg" style="visibility: visible" th:text="请上传图片"></h1>
-            <img id="img" name="img" height="40%" width="30%" >
-            <h3 id="img_name" ></h3>
-        </div>
-        <div align="center">
-            <div style="float: right">
-                <a id="select_btn" class="btn btn-lg btn-info" role="button">选择图片</a>
-                <span>&nbsp;</span>
-                <a id="upload_btn" class="btn btn-lg btn-info" href="#" role="button">点击上传</a>
-                <span>&nbsp;</span>
-                <a id="download_btn" class="btn btn-lg btn-success" href="/index/download?filename='###'" role="button">点击下载</a>
-                <!--<a  class="btn btn-lg btn-success" href="#" role="button" style="visibility: visible" onclick="get()"></a>-->
-            </div>
-            <span>&nbsp;&nbsp;</span>
-            <div style="float: right">
+<!--<input id="img_name_received" name="img_name_received" th:value="${img_name}" style="display: none"/>-->
+<input id="msg_received" name="msg" th:value="${msg}" style="display: none"/>
+<!--<input id="img_src_received" name="img_src" th:value="${img_src}" style="display: none"/>-->
+<input id="handled" name="handled" th:value="${handled}" style="display: none"/>
+<input id="pngpath" name="pngpath" th:value="${pngpath}" style="display: none"/>
+<input id="objpath" name="objpath" th:value="${objpath}" style="display: none"/>
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="/index">主页</a></li>
+                <li role="presentation"><a href="#">关于</a></li>
+                <li role="presentation"><a href="#">历史</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">人脸重建</h3>
+    </div>
+    <hr/>
+    <div class="panel panel-default" >
+        <div class="panel-body">
+            <div id="obj_div" align="center" style="margin-bottom: 10%">
+                <h1 id="msg" style="visibility: visible" th:text="请上传图片"></h1>
+                <img id="img" name="img" height="35%" width="35%" >
+                <h3 id="img_name" ></h3>
             </div>
         </div>
-    </div> <!-- /container -->
-</form>
+    </div>
+    <div align="center">
+        <div style="float: right">
+            <a id="select_btn" class="btn btn-lg btn-info" role="button">选择图片</a>
+            <span>&nbsp;</span>
+            <a id="upload_btn" class="btn btn-lg btn-primary" href="#" role="button">点击上传</a>
+            <span>&nbsp;</span>
+            <a id="download_btn" class="btn btn-lg btn-success" href="/index/download?filename='###'" role="button">点击下载</a>
+            <!--<a  class="btn btn-lg btn-success" href="#" role="button" style="visibility: visible" onclick="get()"></a>-->
+        </div>
+        <span>&nbsp;&nbsp;</span>
+        <div style="float: right">
+        </div>
+    </div>
+    <form id="form" action="/index/upload" enctype="multipart/form-data" method="post">
+        <input id="select_image" name="file" type="file" class="btn btn-lg btn-info" role="button" style="display: none" accept=".jpg"/>
+    </form>
+</div>
 
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../lib/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="../../lib/bootstrap-filestyle/bootstrap-filestyle.js"></script>
 <script src="../../lib/jquery.min.js"></script>
@@ -78,13 +84,13 @@
 
 <script src="../../lib/three/curves/NURBSCurve.js"></script>
 <script src="../../lib/three/curves/NURBSUtils.js"></script>
-<script src="../../lib/FBXLoader.js"></script>
+<script src="../../lib/three/loaders/OBJLoader.js"></script>
 
 <script src="../../lib/three/Detector.js"></script>
 <script src="../../lib/three/libs/stats.min.js"></script>
 
-<!--<script src="../../js/index.js"></script>-->
-<script src="../../js/loadfbx.js"></script>
+<script src="../../js/index.js"></script>
+<script src="../../js/loadmodel.js"></script>
 
 </body>
 </html>

@@ -3,10 +3,11 @@ package com.qianbo.util;
 public class ImageUtil {
 
     private String img_src;
-    private String img_name;
-    private Boolean handle_success;//是否处理完成
+    private String img_name_suffix;
+    private String img_name_no_suffix ;//无后缀
+    private Boolean handle_success = false;//是否处理完成
     private Integer visit_time = 0;//访问次数
-    public static final Integer MAX_VISIT = 3;
+    public static final Integer MAX_VISIT = 60;
 
     public Integer getVisit_time() {
         return visit_time;
@@ -24,12 +25,20 @@ public class ImageUtil {
         this.img_src = img_src;
     }
 
-    public String getImg_name() {
-        return img_name;
+    public String getImg_name_suffix() {
+        return img_name_suffix;
     }
 
-    public void setImg_name(String img_name) {
-        this.img_name = img_name;
+    public void setImg_name_suffix(String img_name_suffix) {
+        this.img_name_suffix = img_name_suffix;
+    }
+
+    public String getImg_name_no_suffix() {
+        return img_name_no_suffix;
+    }
+
+    public void setImg_name_no_suffix(String img_name_no_suffix) {
+        this.img_name_no_suffix = img_name_no_suffix;
     }
 
     public Boolean getHandle_success() {
