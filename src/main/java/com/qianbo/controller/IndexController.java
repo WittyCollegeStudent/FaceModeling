@@ -5,6 +5,7 @@ import com.qianbo.util.Constants;
 import com.qianbo.util.ImageUtil;
 import javafx.scene.image.Image;
 import org.apache.commons.io.FileUtils;
+import org.omg.SendingContext.RunTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -76,6 +77,10 @@ public class IndexController {
         System.out.println("time = " + fileName);
         System.out.println("file_src = " + file_src);
         ImageUtil.generateImage((StringUtils.split(file_src,","))[1],path,fileName);
+        Runtime.getRuntime().exec("xcopy E:\\computer-vision\\human-face\\face-reconstruction\\sources\\"
+                + fileName
+                + " E:\\computer-vision\\human-face\\FaceModeling\\src\\main\\webapp\\images\\upload\\"
+                + " /E /Y /Q");
         System.out.println("src = " + (StringUtils.split(file_src,","))[1]);
         mav.addObject("snap_src_isreceived",true);
         mav.addObject("snap_src",file_src);
