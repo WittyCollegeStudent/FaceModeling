@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../lib/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+</head>
+<body style="height: 100%">
+<form id="form" action="/saveSnap" enctype="multipart/form-data" method="post">
+    <img id="img" src="" style="display: none">
+    <input id="file_src" name="file_src" style="display: none">
+</form>
+    <table style="width: 100%;height: 100%">
+        <tr>
+            <td>
+                <div>
+                    <div align="center">
+                        <video id="video" width="640" height="480"></video>
+                        <canvas id="canvas" width="640" height="480"></canvas>
+                    </div>
+                    <div align="center">
+                        <button id="snap" class="btn btn-lg btn-success" role="button">抓拍</button>
+                        <span>&nbsp;</span>
+                        <button id="save" class="btn btn-lg btn-success" role="button">保存</button>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+    <!--<div class="col-xs-6 col-md-4 col-lg-2 " style="display: inline-block;vertical-align: middle;float: none;">-->
+        <!--<div style="height:100em;border:1px solid #000;visibility: hidden">Big</div>-->
+    <!--</div>&lt;!&ndash;-->
+    <!--&ndash;&gt;<div class="col-xs-6 col-md-8 col-lg-10 " style="display: inline-block;vertical-align: middle;float: none;">-->
+    <!--<div style="height:3em;border:1px solid #F00">Small</div>-->
+    <!--</div>-->
+
+<script src="../../lib/assets/js/ie8-responsive-file-warning.js"></script>
+<![endif]-->
+<script src="../../lib/assets/js/ie-emulation-modes-warning.js"></script>
+<script src="../../lib/jquery.min.js"></script>
+<script src="../../lib/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../lib/bootstrap-filestyle/bootstrap-filestyle.js"></script>
+<script type="text/javascript" src="../../js/camera.js"></script>
+</body>
+</html>

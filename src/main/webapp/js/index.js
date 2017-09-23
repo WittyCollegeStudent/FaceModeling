@@ -10,8 +10,10 @@ if(handled == "false"){
 
 window.onload = function () {
     //如果有结果返回,则设置图片src
-    var src = $("#img_src_received").val();
-    $("#img").attr("src", src);
+    var isSnapped = $("#snap_src_isreceived").val();
+    var src = $("#snap_name_received").val();
+    if(isSnapped == "true")
+        $("#img").attr("src","/images/upload/" + src);
     //设置图片名称
     setImgNameReceived();
     //如果有消息返回，则设置   返回消息
@@ -56,10 +58,9 @@ function resetImageState() {
 }
 
 //点击"上传"
-
 $("#upload_btn").on("click", function () {
     var select_image = $("#select_image").val();
-    if(select_image == null || select_image == ""){
+    if((select_image == null || select_image == "") && ($("#snap_src_isreceived").val() != "true")){
         alert("请选择图片");
         return ;
     }

@@ -1,5 +1,10 @@
 package com.qianbo.util;
 
+import sun.misc.BASE64Decoder;
+
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
 public class ImageUtil {
 
     private String img_src;
@@ -47,5 +52,38 @@ public class ImageUtil {
 
     public void setHandle_success(Boolean handle_success) {
         this.handle_success = handle_success;
+    }
+
+    /*
+    * 从base64还原图片
+    * */
+    public static boolean generateImage(String imgStr , String path, String fileName)
+    {   //对字节数组字符串进行Base64解码并生成图片
+        if (imgStr == null) //图像数据为空
+            return false;
+        BASE64Decoder decoder = new BASE64Decoder();
+        try
+        {
+            //Base64解码
+            byte[] b = decoder.decodeBuffer(imgStr);
+            for(int i=0;i<b.length;++i)
+            {
+                if(b[i]<0)
+                {//调整异常数据
+                    b[i]+=256;
+                }
+            }
+            //生成jpeg图片
+            String imgFilePath = path + "\\" + fileName;//新生成的图片
+            OutputStream out = new FileOutputStream(imgFilePath);
+            out.write(b);
+            out.flush();
+            out.close();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }

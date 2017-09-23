@@ -1,11 +1,10 @@
 package com.qianbo.controller;
 
 import com.qianbo.service.ConvertService;
-import com.qianbo.service.impl.IConvertService;
 import com.qianbo.util.Constants;
 import com.qianbo.util.ImageUtil;
+import javafx.scene.image.Image;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.DateUtils;
 import org.thymeleaf.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 
 @Controller
@@ -57,21 +58,54 @@ public class IndexController {
 //    }
 
     /*
+    * 打开摄像头
+    * */
+    @RequestMapping(path = {"/openCamera"})
+    public String openCamera() {
+        return "camera";
+    }
+
+    /*
+    * 摄像头保存照片
+    * */
+    @RequestMapping(path = {"/saveSnap"})
+    public ModelAndView saveSnap(String file_src) throws IOException {
+        ModelAndView mav = new ModelAndView();
+        String path = Constants.IMAGE_SAVE_PATH;
+        String fileName = Long.toString(System.currentTimeMillis()) + ".jpg";
+        System.out.println("time = " + fileName);
+        System.out.println("file_src = " + file_src);
+        ImageUtil.generateImage((StringUtils.split(file_src,","))[1],path,fileName);
+        System.out.println("src = " + (StringUtils.split(file_src,","))[1]);
+        mav.addObject("snap_src_isreceived",true);
+        mav.addObject("snap_src",file_src);
+        mav.addObject("snap_name_received",fileName);
+        mav.setViewName("index");
+        return mav;
+    }
+
+    /*
     * @param file 传过来的文件，需要转换
     * */
     @RequestMapping(value = "/index/upload")
-    public ModelAndView upload( MultipartFile file) throws IOException {
+    public ModelAndView upload( MultipartFile file,Boolean isSnap,String snapName) throws IOException {
         ModelAndView mav = new ModelAndView();
-        //获得文件名
-        final String originalFilename = file.getOriginalFilename();
-        //保存原图
-        String path = Constants.IMAGE_SAVE_PATH;
-        File targetFile = new File(path +"\\"+ originalFilename);
-        if (!targetFile.exists()) {
-            targetFile.mkdirs();
+        final String originalFilename;
+        //如果是拍摄的照片，因为生成过，就不需要再次生成
+        if(isSnap == null || !isSnap){
+            //获得文件名
+            originalFilename = file.getOriginalFilename();
+            //保存原图
+            String path = Constants.IMAGE_SAVE_PATH;
+            File targetFile = new File(path +"\\"+ originalFilename);
+            if (!targetFile.exists()) {
+                targetFile.mkdirs();
+            }
+            //保存
+            file.transferTo(targetFile);
+        }else {
+            originalFilename = snapName;
         }
-        //保存
-        file.transferTo(targetFile);
         //执行脚本
         new Thread(new Runnable() {
             public void run() {

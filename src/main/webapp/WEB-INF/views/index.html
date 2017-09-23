@@ -29,7 +29,9 @@
 <body>
 <!--<input id="img_name_received" name="img_name_received" th:value="${img_name}" style="display: none"/>-->
 <input id="msg_received" name="msg" th:value="${msg}" style="display: none"/>
-<!--<input id="img_src_received" name="img_src" th:value="${img_src}" style="display: none"/>-->
+<input id="snap_src_isreceived" th:value="${snap_src_isreceived}" style="display: none"/>
+<input id="snap_name_received" th:value="${snap_name_received}" style="display: none"/>
+<input id="snap_src" th:value="${snap_src}" style="display: none"/>
 <input id="handled" name="handled" th:value="${handled}" style="display: none"/>
 <input id="pngpath" name="pngpath" th:value="${pngpath}" style="display: none"/>
 <input id="objpath" name="objpath" th:value="${objpath}" style="display: none"/>
@@ -56,18 +58,19 @@
     </div>
     <div align="center">
         <div style="float: right">
-            <a id="select_btn" class="btn btn-lg btn-info" role="button">选择图片</a>
+            <a id="open_camera_btn" class="btn btn-lg btn-info" role="button" href="/openCamera">拍照选取</a>
+            <span>&nbsp;</span>
+            <a id="select_btn" class="btn btn-lg btn-info" role="button">从本地选取</a>
             <span>&nbsp;</span>
             <a id="upload_btn" class="btn btn-lg btn-primary" href="#" role="button">点击上传</a>
             <span>&nbsp;</span>
-            <a id="download_btn" class="btn btn-lg btn-success" href="/index/download?filename='###'" role="button">点击下载</a>
-            <!--<a  class="btn btn-lg btn-success" href="#" role="button" style="visibility: visible" onclick="get()"></a>-->
+            <a id="download_btn" class="btn btn-lg btn-success" href="/index/download" role="button">点击下载</a>
         </div>
         <span>&nbsp;&nbsp;</span>
         <div style="float: right">
         </div>
     </div>
-    <form id="form" action="/index/upload" enctype="multipart/form-data" method="post">
+    <form id="form" th:action="@{'/index/upload' + '?isSnap=' + ${snap_src_isreceived eq null ?false:snap_src_isreceived} + '&amp;snapName=' + ${snap_name_received}}" enctype="multipart/form-data" method="post">
         <input id="select_image" name="file" type="file" class="btn btn-lg btn-info" role="button" style="display: none" accept=".jpg"/>
     </form>
 </div>
