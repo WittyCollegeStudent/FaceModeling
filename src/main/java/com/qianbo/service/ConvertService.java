@@ -14,12 +14,14 @@ import java.io.InputStreamReader;
 @Transactional
 public class ConvertService implements IConvertService {
 
+    /*
+    * 通过图片建模，成功则返回true，否则返回false
+    * */
     public boolean convert(ImageUtil imageUtil,String path, String name) {
         System.out.println("start convert");
         String file_path = path + File.separator + name;
         System.out.println("file_path = "+file_path);
         String command="python E:\\computer-vision\\human-face\\face-reconstruction\\process.py " + file_path;
-//        String command="ping www.baidu.com";
         Runtime runtime = Runtime.getRuntime();
         String line = null;
         StringBuilder sb = new StringBuilder();

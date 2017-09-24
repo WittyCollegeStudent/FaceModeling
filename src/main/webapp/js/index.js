@@ -1,13 +1,12 @@
-/*
-*页面初始化点击"上传"
-* */
-
 //如果图片处理未完成，则设置定时器，查询处理状态
 var handled = $("#handled").val();
 if(handled == "false"){
     var t1 = window.setInterval(getHandleState,1000);
 }
 
+/*
+*页面初始化点击"上传"
+* */
 window.onload = function () {
     //如果有结果返回,则设置图片src
     var isSnapped = $("#snap_src_isreceived").val();
@@ -110,15 +109,6 @@ $("#select_image").change(function () {
 
 //点击选择图片按钮，弹出图片选择框
 $("#select_btn").on('click', function () {
-    // //初始化后台照片util
-    // $.ajax({
-    //     type:"POST",
-    //     url:"/index/init",
-    //     success:function (data) {
-    //
-    //     }
-    // });
-    // $()
     var $select = $("#select_image");
     $select.click();
     $("#handled").val("");

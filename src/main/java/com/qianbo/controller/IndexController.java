@@ -3,9 +3,7 @@ package com.qianbo.controller;
 import com.qianbo.service.ConvertService;
 import com.qianbo.util.Constants;
 import com.qianbo.util.ImageUtil;
-import javafx.scene.image.Image;
 import org.apache.commons.io.FileUtils;
-import org.omg.SendingContext.RunTime;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.DateUtils;
 import org.thymeleaf.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 
 @Controller
@@ -30,6 +26,9 @@ public class IndexController {
 
     ConvertService convertService = new ConvertService();
 
+    /*
+    * 返回主页面
+    * */
     @RequestMapping(path = {"/", ""})
     public String redirectIndex() {
         return "redirect:/index";
@@ -48,16 +47,6 @@ public class IndexController {
         return mav;
     }
 
-//    /*
-//    * 初始化ImageUtil
-//    * */
-//    @RequestMapping(value = "/index/init")
-//    @ResponseBody
-//    public String init(){
-//        imageUtil = new ImageUtil();
-//        return "ok";
-//    }
-
     /*
     * 打开摄像头
     * */
@@ -68,6 +57,7 @@ public class IndexController {
 
     /*
     * 摄像头保存照片
+    * @param file_src 图片的src
     * */
     @RequestMapping(path = {"/saveSnap"})
     public ModelAndView saveSnap(String file_src) throws IOException {
@@ -77,6 +67,7 @@ public class IndexController {
         System.out.println("time = " + fileName);
         System.out.println("file_src = " + file_src);
         ImageUtil.generateImage((StringUtils.split(file_src,","))[1],path,fileName);
+        //复制图片
         Runtime.getRuntime().exec("xcopy E:\\computer-vision\\human-face\\face-reconstruction\\sources\\"
                 + fileName
                 + " E:\\computer-vision\\human-face\\FaceModeling\\src\\main\\webapp\\images\\upload\\"
@@ -140,8 +131,6 @@ public class IndexController {
             return "failed";
         }
         System.out.println(imageUtil.getVisit_time());
-//        if(imageUtil.getVisit_time() > ImageUtil.MAX_VISIT)
-//            return "failed";
         return imageUtil.getHandle_success().toString();
     }
 
@@ -170,20 +159,15 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/index/download")
-//    public ResponseEntity<byte[]> download(@RequestParam("filename") String filename)
     public ResponseEntity<byte[]> download()
             throws Exception {
         String filename_with_no_suffix = imageUtil.getImg_name_no_suffix();
         String downloadFileName = "fbx&obj&png.zip";
-//        filename = "2234.mpa";
         //下载文件路径
-//        String path = request.getSession().getServletContext().getRealPath(Constants.PREVIEW_PATH);
         String path = Constants.IMAGE_DOWNLOAD_ABSO_PATH + File.separator + filename_with_no_suffix + File.separator + downloadFileName ;
         File file = new File(path);
         HttpHeaders headers = new HttpHeaders();
-//        //下载显示的文件名，解决中文名称乱码问题
-//        String downloadFileName = new String(filename_with_suffix.getBytes("UTF-8"), "iso-8859-1");
-
+        //下载显示的文件名，解决中文名称乱码问题
         //通知浏览器以attachment（下载方式）打开图片
         headers.setContentDispositionFormData("attachment", downloadFileName);
         //application/octet-stream ： 二进制流数据（最常见的文件下载）。
