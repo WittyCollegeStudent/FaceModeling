@@ -1,6 +1,7 @@
 package com.qianbo.service;
 
 import com.qianbo.service.impl.IConvertService;
+import com.qianbo.util.Constants;
 import com.qianbo.util.ImageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,6 @@ public class ConvertService implements IConvertService {
         String line = null;
         StringBuilder sb = new StringBuilder();
         try {
-            System.out.println("------wait 3000------");
             Process process = runtime.exec(command);
             BufferedReader bufferedReader = new BufferedReader
                     (new InputStreamReader(process.getInputStream()));
@@ -36,11 +36,20 @@ public class ConvertService implements IConvertService {
                 sb.append(line + "\n");
             }
             System.out.println(sb.toString());
+            String downloadFileName = "fbx&obj&png.zip";
+            File file = new File(Constants.IMAGE_DOWNLOAD_ABSO_PATH + downloadFileName);
+
+            //如果建模的文件不存在，则说明建模失败
+            if(!file.exists()){
+                imageUtil.setHandle_success(Constants.STATE_HANDLE_FAILURE);
+                return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            imageUtil.setHandle_success(Constants.STATE_HANDLE_FAILURE);
             return false;
         }
-        imageUtil.setHandle_success(true);
+        imageUtil.setHandle_success(Constants.STATE_HANDLE_SUCCESS);
         return true;
     }
 }

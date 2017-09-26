@@ -10,7 +10,7 @@ public class ImageUtil {
     private String img_src;
     private String img_name_suffix;
     private String img_name_no_suffix ;//无后缀
-    private Boolean handle_success = false;//是否处理完成
+    private String handle_success = Constants.STATE_HANDLE_PROCESSING;//是否处理完成
     private Integer visit_time = 0;//访问次数
     public static final Integer MAX_VISIT = 60;
 
@@ -46,11 +46,11 @@ public class ImageUtil {
         this.img_name_no_suffix = img_name_no_suffix;
     }
 
-    public Boolean getHandle_success() {
+    public String getHandle_success() {
         return handle_success;
     }
 
-    public void setHandle_success(Boolean handle_success) {
+    public void setHandle_success(String handle_success) {
         this.handle_success = handle_success;
     }
 

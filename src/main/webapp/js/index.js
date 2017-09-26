@@ -83,6 +83,7 @@ function getHandleState() {
             }else if(data == "failed"){
                 window.clearInterval(t1);
                 $("#msg").text("上传失败，请重新上传");
+                $("#download_btn").hide();
                 return ;
             }
         }

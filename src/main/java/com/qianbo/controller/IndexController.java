@@ -129,7 +129,7 @@ public class IndexController {
             return "";
         imageUtil.setVisit_time(imageUtil.getVisit_time() + 1);
         if (imageUtil.getVisit_time() >= ImageUtil.MAX_VISIT) {
-            return "failed";
+            return Constants.STATE_HANDLE_FAILURE;
         }
         System.out.println(imageUtil.getVisit_time());
         return imageUtil.getHandle_success().toString();
