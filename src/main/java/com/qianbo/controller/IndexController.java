@@ -90,7 +90,8 @@ public class IndexController {
         //如果是拍摄的照片，因为生成过，就不需要再次生成
         if(isSnap == null || !isSnap){
             //获得文件名
-            originalFilename = file.getOriginalFilename();
+            originalFilename = Long.toString(System.currentTimeMillis()) + ".jpg";
+//            originalFilename = file.getOriginalFilename();
             //保存原图
             String path = Constants.IMAGE_SAVE_PATH;
             File targetFile = new File(path +"\\"+ originalFilename);
